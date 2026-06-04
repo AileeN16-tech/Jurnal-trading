@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jurnal Trading Lucu & Seru</title>
+  <style>
+    :root {
+      --bg1: #fff7ed;
+      --bg2: #fdf2f8;
+      --bg3: #eff6ff;
+      --pink: #fb7185;
+      --pink-dark: #e11d48;
+      --purple: #a78bfa;
+      --blue: #38bdf8;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --orange: #fb923c;
+      --red: #ef4444;
+      --ink: #243044;
+      --muted: #6b7280;
+      --card: rgba(255, 255, 255, .82);
+      --line: rgba(36, 48, 68, .10);
+      --shadow: 0 18px 45px rgba(244, 114, 182, .20);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: ui-rounded, "Nunito", "Comic Sans MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(251, 113, 133, .28), transparent 28%),
+        radial-gradient(circle at 86% 6%, rgba(56, 189, 248, .24), transparent 25%),
+        radial-gradient(circle at 70% 88%, rgba(52, 211, 153, .22), transparent 28%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 48%, var(--bg3));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(251, 113, 133, .20) 2px, transparent 2px),
+        radial-gradient(circle, rgba(56, 189, 248, .16) 2px, transparent 2px);
+      background-size: 38px 38px, 52px 52px;
+      background-position: 0 0, 18px 16px;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .floating {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .float-emoji {
+      position: absolute;
+      font-size: 28px;
+      animation: floaty 8s ease-in-out infinite;
+      opacity: .55;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.08));
+    }
+
+    .float-emoji:nth-child(1) { left: 4%; top: 12%; animation-delay: .2s; }
+    .float-emoji:nth-child(2) { left: 88%; top: 18%; animation-delay: 1.4s; }
+    .float-emoji:nth-child(3) { left: 78%; top: 68%; animation-delay: 2.1s; }
+    .float-emoji:nth-child(4) { left: 8%; top: 78%; animation-delay: 3.2s; }
+    .float-emoji:nth-child(5) { left: 48%; top: 6%; animation-delay: 4.1s; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+      50% { transform: translateY(-22px) rotate(7deg) scale(1.08); }
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+      padding: 24px 0 54px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 1000;
+      letter-spacing: -.4px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #fff, #ffe4e6);
+      box-shadow: 0 12px 28px rgba(251,113,133,.25);
+      border: 2px solid rgba(255,255,255,.9);
+      font-size: 25px;
+    }
+
+    .mini-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-nav a {
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255,255,255,.66);
+      border: 1px solid rgba(255,255,255,.9);
+      padding: 10px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(56,189,248,.10);
+      transition: .2s ease;
+    }
+
+    .mini-nav a:hover {
+      transform: translateY(-2px) rotate(-1deg);
+      background: #fff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.22fr .78fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .card,
+    .hero-main,
+    .side-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.88);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-main {
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+      min-height: 360px;
+    }
+
+    .hero-main::after {
+      content: "✨";
+      position: absolute;
+      right: 24px;
+      top: 22px;
+      font-size: 46px;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: .8; }
+      50% { transform: scale(1.14) rotate(12deg); opacity: 1; }
+    }
+
+    .kawaii-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: #9f1239;
+      background: linear-gradient(135deg, #ffe4e6, #fce7f3);
+      border: 1px solid rgba(251,113,133,.18);
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: .96;
+      margin: 16px 0 14px;
+      letter-spacing: -2px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--pink-dark), #7c3aed, #0284c7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-main p {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .mascot-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 22px;
+    }
+
+    .mascot {
+      width: 94px;
+      height: 94px;
+      border-radius: 32px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #fff, #fef3c7);
+      border: 3px solid #fff;
+      box-shadow: 0 14px 32px rgba(251,146,60,.22);
+      font-size: 52px;
+      animation: bounce 2.4s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .speech {
+      flex: 1;
+      min-width: 230px;
+      background: #fff;
+      border-radius: 22px;
+      padding: 15px 17px;
+      border: 2px dashed rgba(251,113,133,.28);
+      color: #9f1239;
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: 0 10px 25px rgba(251,113,133,.12);
+    }
+
+    .side-card {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .daily-box {
+      background:
+        linear-gradient(135deg, rgba(52,211,153,.18), rgba(56,189,248,.16)),
+        #fff;
+      border: 2px solid rgba(255,255,255,.9);
+      border-radius: 26px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .daily-box::after {
+      content: "🚀";
+      position: absolute;
+      right: 15px;
+      bottom: 10px;
+      font-size: 42px;
+      opacity: .38;
+      transform: rotate(-12deg);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .daily-rate {
+      font-size: 40px;
+      margin: 8px 0 4px;
+      font-weight: 1000;
+      letter-spacing: -1.4px;
+      color: #059669;
+    }
+
+    .mini-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .mission-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 18px;
+      border: 2px solid rgba(167,139,250,.18);
+    }
+
+    .mission-title {
+      font-weight: 1000;
+      margin-bottom: 10px;
+    }
+
+    .mission-list {
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #4b5563;
+    }
+
+    .mission-list span {
+      background: #f8fafc;
+      padding: 9px 11px;
+      border-radius: 14px;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.5px;
+    }
+
+    .cute-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff7ed;
+      color: #c2410c;
+      font-size: 12px;
+      font-weight: 1000;
+      border: 1px solid rgba(251,146,60,.22);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 13px;
+    }
+
+    .form-row.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    label {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 1000;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 2px solid rgba(148,163,184,.20);
+      background: rgba(255,255,255,.86);
+      color: var(--ink);
+      border-radius: 17px;
+      padding: 13px 14px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 800;
+      transition: .18s ease;
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(251,113,133,.55);
+      box-shadow: 0 0 0 5px rgba(251,113,133,.12);
+      background: #fff;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 18px;
+      padding: 13px 16px;
+      color: #fff;
+      background: linear-gradient(135deg, #fb7185, #a78bfa);
+      font-weight: 1000;
+      cursor: pointer;
+      transition: .2s ease;
+      box-shadow: 0 12px 22px rgba(251,113,133,.25);
+    }
+
+    button:hover {
+      transform: translateY(-2px) rotate(-.6deg);
+      filter: brightness(1.04);
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #38bdf8, #34d399);
+      box-shadow: 0 12px 22px rgba(56,189,248,.20);
+    }
+
+    button.soft {
+      background: #fff;
+      color: var(--ink);
+      border: 2px solid rgba(148,163,184,.18);
+      box-shadow: 0 10px 20px rgba(148,163,184,.12);
+    }
+
+    button.danger {
+      background: linear-gradient(135deg, #f87171, #fb923c);
+      box-shadow: 0 12px 22px rgba(239,68,68,.18);
+    }
+
+    .stat {
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.92);
+      border-radius: 24px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 124px;
+    }
+
+    .stat::after {
+      position: absolute;
+      right: 13px;
+      top: 10px;
+      font-size: 30px;
+      opacity: .26;
+    }
+
+    .stat.wallet::after { content: "👛"; }
+    .stat.deposit::after { content: "💰"; }
+    .stat.profit::after { content: "🌱"; }
+    .stat.daily::after { content: "☀️"; }
+    .stat.trade::after { content: "🎮"; }
+    .stat.win::after { content: "🏆"; }
+    .stat.pl::after { content: "💎"; }
+    .stat.avg::after { content: "🍭"; }
+
+    .stat .value {
+      font-size: 26px;
+      font-weight: 1000;
+      letter-spacing: -.8px;
+      margin-top: 9px;
+    }
+
+    .value.green { color: #059669; }
+    .value.blue { color: #0284c7; }
+    .value.yellow { color: #d97706; }
+    .value.pink { color: #e11d48; }
+    .value.loss { color: #dc2626; }
+
+    .progress-area {
+      margin-top: 12px;
+      background: #f8fafc;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,.16);
+      height: 14px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #fb7185, #fbbf24, #34d399);
+      border-radius: 999px;
+      transition: width .7s ease;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,.14);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 920px;
+    }
+
+    th,
+    td {
+      padding: 14px 15px;
+      border-bottom: 1px solid rgba(148,163,184,.16);
+      text-align: left;
+      font-size: 14px;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    th {
+      background: linear-gradient(135deg, #ffe4e6, #e0f2fe);
+      color: #334155;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-weight: 1000;
+    }
+
+    tr:hover td {
+      background: #fff7ed;
+    }
+
+    .profit-text {
+      color: #059669;
+      font-weight: 1000;
+    }
+
+    .loss-text {
+      color: #dc2626;
+      font-weight: 1000;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .pill.buy {
+      color: #047857;
+      background: #d1fae5;
+    }
+
+    .pill.sell {
+      color: #be123c;
+      background: #ffe4e6;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .confetti-piece {
+      position: fixed;
+      top: -12px;
+      width: 10px;
+      height: 16px;
+      border-radius: 4px;
+      z-index: 9999;
+      animation: fall 900ms ease-in forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) rotate(420deg);
+        opacity: 0;
+      }
+    }
+
+    .cute-alert {
+      position: fixed;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%) translateY(-20px);
+      background: #fff;
+      border: 2px solid rgba(251,113,133,.22);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 1000;
+      box-shadow: 0 15px 35px rgba(251,113,133,.20);
+      opacity: 0;
+      z-index: 9998;
+      transition: .22s ease;
+    }
+
+    .cute-alert.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-4,
+      .grid-2,
+      .form-row,
+      .form-row.two {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .mini-nav {
+        justify-content: flex-start;
+      }
+
+      .hero-main {
+        min-height: auto;
+        padding: 24px;
+      }
+
+      .daily-rate {
+        font-size: 34px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(94%, 1180px);
+        padding-top: 16px;
+      }
+
+      .brand span {
+        font-size: 15px;
+      }
+
+      .mini-nav a {
+        font-size: 12px;
+        padding: 9px 11px;
+      }
+
+      .mascot {
+        width: 76px;
+        height: 76px;
+        border-radius: 26px;
+        font-size: 42px;
+      }
+
+      .stat .value {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="floating" aria-hidden="true">
+    <span class="float-emoji">🌈</span>
+    <span class="float-emoji">💸</span>
+    <span class="float-emoji">🐣</span>
+    <span class="float-emoji">⭐</span>
+    <span class="float-emoji">🍀</span>
+  </div>
+
+  <div class="cute-alert" id="cuteAlert">Yeay! Berhasil 🎉</div>
+
+  <main class="container">
+    <nav class="topbar">
+      <div class="brand">
+        <div class="logo">🐻</div>
+        <span>Trading Buddy Journal</span>
+      </div>
+
+      <div class="mini-nav">
+        <a href="#simulasi">Simulasi</a>
+        <a href="#target">Target</a>
+        <a href="#jurnal">Jurnal</a>
+        <a href="#riwayat">Riwayat</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-main">
+        <span class="kawaii-badge">🎀 Cute Trading Planner</span>
+        <h1>
+          Jurnal Trading<br>
+          <span class="gradient-text">Lebih Lucu & Seru</span>
+        </h1>
+        <p>
+          Catat trade kamu, hitung target harian, lihat perkembangan saldo bulanan,
+          dan jadikan disiplin trading terasa seperti game kecil yang menyenangkan.
+        </p>
+
+        <div class="mascot-row">
+          <div class="mascot">🐻</div>
+          <div class="speech">
+            Misi hari ini: jangan overtrade, ikuti plan, dan target cukup kecil tapi konsisten.
+            Fokus utama bukan cepat kaya, tapi saldo bertumbuh rapi. 💗
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-card">
+        <div class="daily-box">
+          <div class="label">Return harian setara 3%/bulan</div>
+          <div class="daily-rate" id="dailyRateCard">0,0986%</div>
+          <div class="mini-note">
+            Ini target harian compound. Nominal rupiahnya otomatis naik saat modal bertambah.
+          </div>
+        </div>
+
+        <div class="mission-card">
+          <div class="mission-title">🎯 Daily Trading Quest</div>
+          <div class="mission-list">
+            <span>✅ Cek trend dulu</span>
+            <span>✅ Tentukan SL sebelum entry</span>
+            <span>✅ Catat alasan entry</span>
+            <span>✅ Evaluasi setelah close</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="card section" id="simulasi">
+      <div class="card-title">
+        <h2>⚙️ Pengaturan Simulasi Modal</h2>
+        <span class="cute-chip">Tambah saldo tiap bulan</span>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Modal Awal</label>
+          <input type="number" id="initialCapital" value="2000000" />
+        </div>
+        <div>
+          <label>Tambah Modal per Bulan</label>
+          <input type="number" id="monthlyDeposit" value="500000" />
+        </div>
+        <div>
+          <label>Target Profit per Bulan (%)</label>
+          <input type="number" id="monthlyRate" value="3" step="0.1" />
+        </div>
+        <div>
+          <label>Durasi Simulasi (Bulan)</label>
+          <input type="number" id="months" value="12" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="calculatePlan(true)">✨ Hitung Sekarang</button>
+        <button class="secondary" onclick="fillExample()">🐣 Pakai Contoh Rp2 Juta</button>
+        <button class="soft" onclick="scrollToJournal()">📝 Isi Jurnal</button>
+      </div>
+    </section>
+
+    <section class="grid grid-4 section" id="target">
+      <div class="stat wallet">
+        <div class="label">Saldo Akhir Simulasi</div>
+        <div class="value green" id="finalBalance">Rp0</div>
+        <div class="progress-area"><div class="progress-fill" id="balanceProgress"></div></div>
+      </div>
+
+      <div class="stat deposit">
+        <div class="label">Total Setoran Modal</div>
+        <div class="value blue" id="totalDeposit">Rp0</div>
+        <div class="progress-area"><div class="progress-fill" style="width:72%;"></div></div>
+      </div>
+
+      <div class="stat profit">
+        <div class="label">Total Target Profit</div>
+        <div class="value yellow" id="totalProfit">Rp0</div>
+        <div class="progress-area"><div class="progress-fill" id="profitProgress"></div></div>
+      </div>
+
+      <div class="stat daily">
+        <div class="label">Target Harian Bulan Pertama</div>
+        <div class="value pink" id="firstDailyTarget">Rp0</div>
+        <div class="progress-area"><div class="progress-fill" style="width:36%;"></div></div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <div class="card-title">
+        <h2>📅 Tabel Target Bulanan & Harian</h2>
+        <span class="cute-chip">Auto compound</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Bulan</th>
+              <th>Modal Aktif Awal Bulan</th>
+              <th>Target Profit Bulanan</th>
+              <th>Target / Hari Simple</th>
+              <th>Target / Hari Compound</th>
+              <th>Saldo Akhir Bulan</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="planTable"></tbody>
+        </table>
+      </div>
+
+      <p class="footer-note">
+        Simple = target bulanan dibagi 30 hari. Compound = return harian yang setara dengan target bulanan.
+      </p>
+    </section>
+
+    <section class="grid grid-2 section" id="jurnal">
+      <div class="card">
+        <div class="card-title">
+          <h2>📝 Input Jurnal Trading</h2>
+          <span class="cute-chip">No overtrade ya</span>
+        </div>
+
+        <div class="form-row two">
+          <div>
+            <label>Tanggal</label>
+            <input type="date" id="tradeDate" />
+          </div>
+          <div>
+            <label>Pair / Coin</label>
+            <input type="text" id="pair" placeholder="Contoh: BTCUSDT.P" />
+          </div>
+          <div>
+            <label>Posisi</label>
+            <select id="side">
+              <option value="BUY">BUY / Long 🟢</option>
+              <option value="SELL">SELL / Short 🔴</option>
+            </select>
+          </div>
+          <div>
+            <label>Hasil Profit/Loss (Rp)</label>
+            <input type="number" id="result" placeholder="Contoh: 65000 atau -30000" />
+          </div>
+          <div>
+            <label>Entry</label>
+            <input type="number" id="entry" step="0.0001" placeholder="Harga entry" />
+          </div>
+          <div>
+            <label>Stop Loss</label>
+            <input type="number" id="sl" step="0.0001" placeholder="Harga SL" />
+          </div>
+          <div>
+            <label>Take Profit</label>
+            <input type="number" id="tp" step="0.0001" placeholder="Harga TP" />
+          </div>
+          <div>
+            <label>Risk (%)</label>
+            <input type="number" id="risk" step="0.1" placeholder="Contoh: 1" />
+          </div>
+        </div>
+
+        <div>
+          <label>Catatan Evaluasi</label>
+          <textarea id="note" placeholder="Contoh: entry sudah sesuai plan, tapi exit terlalu cepat."></textarea>
+        </div>
+
+        <div class="btns">
+          <button onclick="saveTrade()">💾 Simpan Jurnal</button>
+          <button class="soft" onclick="clearForm()">🧽 Kosongkan</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h2>📊 Ringkasan Jurnal</h2>
+          <span class="cute-chip">Trading score</span>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="stat trade">
+            <div class="label">Total Trade</div>
+            <div class="value" id="totalTrades">0</div>
+          </div>
+          <div class="stat win">
+            <div class="label">Win Rate</div>
+            <div class="value green" id="winRate">0%</div>
+          </div>
+          <div class="stat pl">
+            <div class="label">Total Profit/Loss</div>
+            <div class="value" id="journalPL">Rp0</div>
+          </div>
+          <div class="stat avg">
+            <div class="label">Rata-rata per Trade</div>
+            <div class="value blue" id="avgTrade">Rp0</div>
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="secondary" onclick="exportCSV()">📥 Export CSV</button>
+          <button class="danger" onclick="resetJournal()">🗑️ Reset Jurnal</button>
+        </div>
+
+        <p class="footer-note">
+          Data jurnal tersimpan di browser kamu. Jadi kalau pindah device/browser, datanya tidak otomatis ikut.
+        </p>
+      </div>
+    </section>
+
+    <section class="card section" id="riwayat">
+      <div class="card-title">
+        <h2>📒 Riwayat Jurnal Trading</h2>
+        <span class="cute-chip">Evaluasi = naik level</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Pair</th>
+              <th>Posisi</th>
+              <th>Entry</th>
+              <th>SL</th>
+              <th>TP</th>
+              <th>Risk</th>
+              <th>Hasil</th>
+              <th>Catatan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="journalTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const rupiah = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0
+    });
+
+    const percent = new Intl.NumberFormat("id-ID", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4
+    });
+
+    const colors = ["#fb7185", "#a78bfa", "#38bdf8", "#34d399", "#fbbf24", "#fb923c"];
+    let trades = JSON.parse(localStorage.getItem("cuteTradingJournalV2")) || [];
+
+    function getNumber(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function showAlert(message) {
+      const alertBox = document.getElementById("cuteAlert");
+      alertBox.textContent = message;
+      alertBox.classList.add("show");
+      setTimeout(() => alertBox.classList.remove("show"), 1700);
+    }
+
+    function confetti() {
+      for (let i = 0; i < 34; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * .25 + "s";
+        piece.style.transform = "rotate(" + Math.random() * 120 + "deg)";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 1200);
+      }
+    }
+
+    function calculatePlan(withParty = false) {
+      const initialCapital = getNumber("initialCapital");
+      const monthlyDeposit = getNumber("monthlyDeposit");
+      const monthlyRate = getNumber("monthlyRate") / 100;
+      const months = getNumber("months");
+
+      if (initialCapital < 0 || monthlyDeposit < 0 || monthlyRate < 0 || months <= 0) {
+        showAlert("Input belum valid ya 🐣");
+        return;
+      }
+
+      const dailyRate = Math.pow(1 + monthlyRate, 1 / 30) - 1;
+      document.getElementById("dailyRateCard").textContent = percent.format(dailyRate * 100) + "%";
+
+      let balance = initialCapital;
+      let totalProfit = 0;
+      let totalDeposit = initialCapital;
+      let firstDaily = 0;
+      let rows = "";
+
+      for (let month = 1; month <= months; month++) {
+        if (month > 1) {
+          balance += monthlyDeposit;
+          totalDeposit += monthlyDeposit;
+        }
+
+        const activeCapital = balance;
+        const monthlyProfit = activeCapital * monthlyRate;
+        const simpleDaily = monthlyProfit / 30;
+        const compoundDaily = activeCapital * dailyRate;
+        const endingBalance = activeCapital + monthlyProfit;
+
+        if (month === 1) firstDaily = compoundDaily;
+
+        totalProfit += monthlyProfit;
+        balance = endingBalance;
+
+        const status = month <= 3 ? "🐣 Mulai" : month <= 8 ? "🌱 Bertumbuh" : "🚀 Makin gede";
+
+        rows += `
+          <tr>
+            <td><strong>Bulan ${month}</strong></td>
+            <td>${rupiah.format(activeCapital)}</td>
+            <td class="profit-text">${rupiah.format(monthlyProfit)}</td>
+            <td>${rupiah.format(simpleDaily)}</td>
+            <td>${rupiah.format(compoundDaily)}</td>
+            <td><strong>${rupiah.format(endingBalance)}</strong></td>
+            <td>${status}</td>
+          </tr>
+        `;
+      }
+
+      document.getElementById("planTable").innerHTML = rows;
+      document.getElementById("finalBalance").textContent = rupiah.format(balance);
+      document.getElementById("totalDeposit").textContent = rupiah.format(totalDeposit);
+      document.getElementById("totalProfit").textContent = rupiah.format(totalProfit);
+      document.getElementById("firstDailyTarget").textContent = rupiah.format(firstDaily);
+
+      const profitRatio = totalDeposit > 0 ? Math.min((totalProfit / totalDeposit) * 100, 100) : 0;
+      const balanceRatio = totalDeposit > 0 ? Math.min((balance / (totalDeposit * 1.35)) * 100, 100) : 0;
+
+      document.getElementById("profitProgress").style.width = profitRatio + "%";
+      document.getElementById("balanceProgress").style.width = balanceRatio + "%";
+
+      if (withParty) {
+        confetti();
+        showAlert("Simulasi berhasil dihitung 🎉");
+      }
+    }
+
+    function fillExample() {
+      document.getElementById("initialCapital").value = 2000000;
+      document.getElementById("monthlyDeposit").value = 500000;
+      document.getElementById("monthlyRate").value = 3;
+      document.getElementById("months").value = 12;
+      calculatePlan(true);
+    }
+
+    function scrollToJournal() {
+      document.getElementById("jurnal").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function saveTrade() {
+      const trade = {
+        id: Date.now(),
+        date: document.getElementById("tradeDate").value,
+        pair: document.getElementById("pair").value.trim().toUpperCase(),
+        side: document.getElementById("side").value,
+        entry: document.getElementById("entry").value,
+        sl: document.getElementById("sl").value,
+        tp: document.getElementById("tp").value,
+        risk: document.getElementById("risk").value,
+        result: Number(document.getElementById("result").value || 0),
+        note: document.getElementById("note").value.trim()
+      };
+
+      if (!trade.date || !trade.pair) {
+        showAlert("Tanggal dan pair wajib diisi dulu 🐣");
+        return;
+      }
+
+      trades.unshift(trade);
+      localStorage.setItem("cuteTradingJournalV2", JSON.stringify(trades));
+      clearForm();
+      renderJournal();
+      confetti();
+      showAlert("Jurnal berhasil disimpan 💾✨");
+    }
+
+    function clearForm() {
+      document.getElementById("tradeDate").valueAsDate = new Date();
+      document.getElementById("pair").value = "";
+      document.getElementById("side").value = "BUY";
+      document.getElementById("entry").value = "";
+      document.getElementById("sl").value = "";
+      document.getElementById("tp").value = "";
+      document.getElementById("risk").value = "";
+      document.getElementById("result").value = "";
+      document.getElementById("note").value = "";
+    }
+
+    function deleteTrade(id) {
+      trades = trades.filter(trade => trade.id !== id);
+      localStorage.setItem("cuteTradingJournalV2", JSON.stringify(trades));
+      renderJournal();
+      showAlert("Data trade dihapus 🧽");
+    }
+
+    function resetJournal() {
+      const yakin = confirm("Yakin mau hapus semua jurnal?");
+      if (!yakin) return;
+      trades = [];
+      localStorage.removeItem("cuteTradingJournalV2");
+      renderJournal();
+      showAlert("Semua jurnal sudah bersih 🗑️");
+    }
+
+    function renderJournal() {
+      const tbody = document.getElementById("journalTable");
+
+      if (trades.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" class="empty">Belum ada data jurnal. Yuk catat trade pertamamu 🐻</td>
+          </tr>
+        `;
+      } else {
+        tbody.innerHTML = trades.map(trade => {
+          const isProfit = Number(trade.result || 0) >= 0;
+          return `
+            <tr>
+              <td>${trade.date}</td>
+              <td><strong>${trade.pair}</strong></td>
+              <td><span class="pill ${trade.side === "BUY" ? "buy" : "sell"}">${trade.side === "BUY" ? "🟢 BUY" : "🔴 SELL"}</span></td>
+              <td>${trade.entry || "-"}</td>
+              <td>${trade.sl || "-"}</td>
+              <td>${trade.tp || "-"}</td>
+              <td>${trade.risk ? trade.risk + "%" : "-"}</td>
+              <td class="${isProfit ? "profit-text" : "loss-text"}">${rupiah.format(trade.result)}</td>
+              <td>${trade.note || "-"}</td>
+              <td><button class="danger" onclick="deleteTrade(${trade.id})">Hapus</button></td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      const total = trades.reduce((sum, t) => sum + Number(t.result || 0), 0);
+      const wins = trades.filter(t => Number(t.result || 0) > 0).length;
+      const winRate = trades.length ? (wins / trades.length) * 100 : 0;
+      const avg = trades.length ? total / trades.length : 0;
+
+      const journalPL = document.getElementById("journalPL");
+      document.getElementById("totalTrades").textContent = trades.length;
+      document.getElementById("winRate").textContent = percent.format(winRate) + "%";
+      journalPL.textContent = rupiah.format(total);
+      journalPL.className = total >= 0 ? "value green" : "value loss";
+      document.getElementById("avgTrade").textContent = rupiah.format(avg);
+    }
+
+    function exportCSV() {
+      if (trades.length === 0) {
+        showAlert("Belum ada data buat diexport 🐣");
+        return;
+      }
+
+      const header = ["Tanggal", "Pair", "Posisi", "Entry", "SL", "TP", "Risk", "Hasil", "Catatan"];
+      const rows = trades.map(t => [
+        t.date, t.pair, t.side, t.entry, t.sl, t.tp, t.risk, t.result, t.note
+      ]);
+
+      const csv = [header, ...rows]
+        .map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "jurnal-trading-lucu.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+      showAlert("CSV berhasil dibuat 📥");
+    }
+
+    document.getElementById("tradeDate").valueAsDate = new Date();
+    calculatePlan(false);
+    renderJournal();
+  </script>
+</body>
+</html>
