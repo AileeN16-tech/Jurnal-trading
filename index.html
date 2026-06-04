@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jurnal Trading </title>
+  <title>Jurnal Trading Lucu + IDR/USD</title>
   <style>
     :root {
       --bg1: #fff7ed;
@@ -359,6 +359,39 @@
       font-size: 12px;
       font-weight: 1000;
       border: 1px solid rgba(251,146,60,.22);
+    }
+
+    .currency-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.4fr;
+      gap: 13px;
+      align-items: end;
+      margin-bottom: 16px;
+      padding: 15px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(224,242,254,.58));
+      border: 2px solid rgba(255,255,255,.86);
+      box-shadow: 0 10px 24px rgba(56,189,248,.10);
+    }
+
+    .currency-info {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      border-radius: 18px;
+      padding: 12px 14px;
+      background: #fff;
+      color: #475569;
+      border: 2px dashed rgba(56,189,248,.22);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .currency-switch {
+        grid-template-columns: 1fr;
+      }
     }
 
     .grid {
@@ -865,7 +898,7 @@
           <div class="label">Return harian setara 3%/bulan</div>
           <div class="daily-rate" id="dailyRateCard">0,0986%</div>
           <div class="mini-note">
-            Ini target harian compound. Nominal rupiahnya otomatis naik saat modal bertambah.
+            Ini target harian compound. Nominalnya otomatis naik saat modal bertambah sesuai mata uang yang dipilih.
           </div>
         </div>
 
@@ -887,13 +920,30 @@
         <span class="cute-chip">Tambah saldo tiap bulan</span>
       </div>
 
+      <div class="currency-switch">
+        <div>
+          <label>Pilih Mata Uang</label>
+          <select id="currencySelect" onchange="changeCurrency()">
+            <option value="IDR">IDR / Rupiah 🇮🇩</option>
+            <option value="USD">USD / Dollar 🇺🇸</option>
+          </select>
+        </div>
+        <div>
+          <label>Kurs Konversi 1 USD = Rp</label>
+          <input type="text" id="usdRate" value="16.000" inputmode="numeric" onblur="formatRateInput()" />
+        </div>
+        <div class="currency-info" id="currencyBadge">
+          Pilih IDR atau USD. Saat diganti, nominal input akan dikonversi memakai kurs di samping.
+        </div>
+      </div>
+
       <div class="form-row">
         <div>
-          <label>Modal Awal</label>
+          <label>Modal Awal (<span class="currency-code-label">IDR</span>)</label>
           <input type="text" id="initialCapital" class="money-input" value="2.000.000" inputmode="numeric" />
         </div>
         <div>
-          <label>Tambah Modal per Bulan</label>
+          <label>Tambah Modal per Bulan (<span class="currency-code-label">IDR</span>)</label>
           <input type="text" id="monthlyDeposit" class="money-input" value="500.000" inputmode="numeric" />
         </div>
         <div>
@@ -908,7 +958,7 @@
 
       <div class="btns">
         <button onclick="calculatePlan(true)">✨ Hitung Sekarang</button>
-        <button class="secondary" onclick="fillExample()">🐣 Pakai Contoh Rp2 Juta</button>
+        <button class="secondary" id="exampleBtn" onclick="fillExample()">🐣 Pakai Contoh Rp2 Juta</button>
         <button class="soft" onclick="scrollToDaily()">✅ Ceklis Harian</button>
       </div>
     </section>
@@ -1001,7 +1051,7 @@
                 <input type="date" id="dailyDate" />
               </div>
               <div>
-                <label>Profit Hari Ini (Rp)</label>
+                <label>Profit Hari Ini (<span class="currency-code-label">IDR</span>)</label>
                 <input type="text" id="dailyResult" class="money-input" placeholder="Contoh: 2.500 atau -1.000" inputmode="numeric" />
               </div>
             </div>
@@ -1096,7 +1146,7 @@
             </select>
           </div>
           <div>
-            <label>Hasil Profit/Loss (Rp)</label>
+            <label>Hasil Profit/Loss (<span class="currency-code-label">IDR</span>)</label>
             <input type="text" id="result" class="money-input" placeholder="Contoh: 65.000 atau -30.000" inputmode="numeric" />
           </div>
           <div>
@@ -1193,11 +1243,62 @@
   </main>
 
   <script>
-    const rupiah = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0
-    });
+    const currencyConfig = {
+      IDR: {
+        code: "IDR",
+        locale: "id-ID",
+        currency: "IDR",
+        name: "Rupiah",
+        symbol: "Rp",
+        inputDecimals: 0,
+        displayDecimals: 0,
+        defaultInitial: 2000000,
+        defaultMonthly: 500000,
+        exampleLabel: "🐣 Pakai Contoh Rp2 Juta",
+        dailyPlaceholder: "Contoh: 2.500 atau -1.000",
+        tradePlaceholder: "Contoh: 65.000 atau -30.000"
+      },
+      USD: {
+        code: "USD",
+        locale: "en-US",
+        currency: "USD",
+        name: "US Dollar",
+        symbol: "$",
+        inputDecimals: 2,
+        displayDecimals: 2,
+        defaultInitial: 125,
+        defaultMonthly: 31.25,
+        exampleLabel: "🐣 Pakai Contoh $125",
+        dailyPlaceholder: "Contoh: 0.25 atau -0.10",
+        tradePlaceholder: "Contoh: 4.00 atau -2.00"
+      }
+    };
+
+    let selectedCurrency = localStorage.getItem("cuteTradingCurrencyV1") || "IDR";
+
+    function getCurrencyConfig(code = selectedCurrency) {
+      return currencyConfig[code] || currencyConfig.IDR;
+    }
+
+    function formatCurrency(value, code = selectedCurrency) {
+      const cfg = getCurrencyConfig(code);
+      return new Intl.NumberFormat(cfg.locale, {
+        style: "currency",
+        currency: cfg.currency,
+        minimumFractionDigits: cfg.displayDecimals,
+        maximumFractionDigits: cfg.displayDecimals
+      }).format(Number(value || 0));
+    }
+
+    function formatMoneyInputValue(value, code = selectedCurrency) {
+      const cfg = getCurrencyConfig(code);
+      const number = Number(value || 0);
+      const formatted = new Intl.NumberFormat(cfg.locale, {
+        minimumFractionDigits: cfg.inputDecimals,
+        maximumFractionDigits: cfg.inputDecimals
+      }).format(Math.abs(number));
+      return number < 0 ? "-" + formatted : formatted;
+    }
 
     const percent = new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 2,
@@ -1209,27 +1310,53 @@
     let dailyChecks = JSON.parse(localStorage.getItem("cuteDailyChecksV3")) || [];
     let planData = [];
 
-    function parseMoney(value) {
-      const text = String(value || "");
-      const isNegative = text.trim().startsWith("-");
+    function parseMoneyByCurrency(value, code = selectedCurrency) {
+      const cfg = getCurrencyConfig(code);
+      const text = String(value || "").trim();
+      if (!text || text === "-") return 0;
+
+      if (cfg.code === "USD") {
+        let clean = text.replace(/[^0-9,.-]/g, "");
+        clean = clean.replace(/(?!^)-/g, "");
+
+        if (clean.includes(".") && clean.includes(",")) {
+          clean = clean.replace(/,/g, "");
+        } else if (!clean.includes(".") && clean.includes(",")) {
+          clean = clean.replace(",", ".");
+        }
+
+        const number = parseFloat(clean);
+        return Number.isFinite(number) ? number : 0;
+      }
+
+      const isNegative = text.startsWith("-");
       const clean = text.replace(/[^0-9]/g, "");
       if (!clean) return 0;
       const number = Number(clean);
       return isNegative ? -number : number;
     }
 
-    function formatMoneyText(value) {
-      const text = String(value || "");
-      const isNegative = text.trim().startsWith("-");
-      const clean = text.replace(/[^0-9]/g, "");
-      if (!clean) return isNegative ? "-" : "";
-      const formatted = new Intl.NumberFormat("id-ID").format(Number(clean));
-      return isNegative ? "-" + formatted : formatted;
+    function parseMoney(value) {
+      return parseMoneyByCurrency(value, selectedCurrency);
+    }
+
+    function formatMoneyText(value, code = selectedCurrency) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      if (text === "-") return "-";
+      const number = parseMoneyByCurrency(text, code);
+      if (!Number.isFinite(number)) return "";
+      return formatMoneyInputValue(number, code);
     }
 
     function setupMoneyInputs() {
       document.querySelectorAll(".money-input").forEach(input => {
         input.addEventListener("input", () => {
+          if (selectedCurrency === "USD") {
+            input.value = input.value.replace(/[^0-9,.-]/g, "").replace(/(?!^)-/g, "");
+            return;
+          }
+
           const cursorAtEnd = input.selectionStart === input.value.length;
           input.value = formatMoneyText(input.value);
           if (cursorAtEnd) {
@@ -1241,6 +1368,88 @@
           input.value = formatMoneyText(input.value);
         });
       });
+    }
+
+    function parseExchangeRate() {
+      const input = document.getElementById("usdRate");
+      const clean = String(input?.value || "").replace(/[^0-9]/g, "");
+      return Number(clean || 16000);
+    }
+
+    function formatRateInput() {
+      const input = document.getElementById("usdRate");
+      if (!input) return;
+      const rate = parseExchangeRate();
+      input.value = new Intl.NumberFormat("id-ID").format(rate);
+      updateCurrencyUI();
+    }
+
+    function setupRateInput() {
+      const input = document.getElementById("usdRate");
+      if (!input) return;
+      input.addEventListener("input", () => {
+        const clean = input.value.replace(/[^0-9]/g, "");
+        input.value = clean ? new Intl.NumberFormat("id-ID").format(Number(clean)) : "";
+      });
+    }
+
+    function convertMoneyValue(value, fromCode, toCode) {
+      if (fromCode === toCode) return value;
+      const rate = parseExchangeRate();
+      if (fromCode === "IDR" && toCode === "USD") return value / rate;
+      if (fromCode === "USD" && toCode === "IDR") return value * rate;
+      return value;
+    }
+
+    function setMoneyInputValue(id, value, code = selectedCurrency) {
+      const input = document.getElementById(id);
+      if (input) input.value = formatMoneyInputValue(value, code);
+    }
+
+    function updateCurrencyUI() {
+      const cfg = getCurrencyConfig();
+      document.querySelectorAll(".currency-code-label").forEach(label => {
+        label.textContent = cfg.code;
+      });
+
+      const exampleBtn = document.getElementById("exampleBtn");
+      if (exampleBtn) exampleBtn.textContent = cfg.exampleLabel;
+
+      const dailyResult = document.getElementById("dailyResult");
+      if (dailyResult) dailyResult.placeholder = cfg.dailyPlaceholder;
+
+      const result = document.getElementById("result");
+      if (result) result.placeholder = cfg.tradePlaceholder;
+
+      const badge = document.getElementById("currencyBadge");
+      if (badge) {
+        badge.textContent = `Mode aktif: ${cfg.code} (${cfg.name}). Ganti IDR/USD kapan saja; nominal input dikonversi memakai kurs 1 USD = ${new Intl.NumberFormat("id-ID").format(parseExchangeRate())} IDR.`;
+      }
+    }
+
+    function changeCurrency() {
+      const select = document.getElementById("currencySelect");
+      const newCurrency = select.value;
+      const oldCurrency = selectedCurrency;
+      const moneyInputIds = ["initialCapital", "monthlyDeposit", "dailyResult", "result"];
+      const oldValues = moneyInputIds.map(id => {
+        const input = document.getElementById(id);
+        return [id, parseMoneyByCurrency(input?.value || "", oldCurrency)];
+      });
+
+      selectedCurrency = newCurrency;
+      localStorage.setItem("cuteTradingCurrencyV1", selectedCurrency);
+
+      oldValues.forEach(([id, value]) => {
+        const input = document.getElementById(id);
+        if (!input || input.value.trim() === "") return;
+        setMoneyInputValue(id, convertMoneyValue(value, oldCurrency, newCurrency), newCurrency);
+      });
+
+      updateCurrencyUI();
+      calculatePlan(false);
+      renderJournal();
+      showAlert(`Mode mata uang diganti ke ${selectedCurrency} 💱`);
     }
 
     function getNumber(id) {
@@ -1335,21 +1544,21 @@
         rows += `
           <tr>
             <td><strong>Bulan ${month}</strong></td>
-            <td>${rupiah.format(activeCapital)}</td>
-            <td class="profit-text">${rupiah.format(monthlyProfit)}</td>
-            <td>${rupiah.format(simpleDaily)}</td>
-            <td>${rupiah.format(compoundDaily)}</td>
-            <td><strong>${rupiah.format(endingBalance)}</strong></td>
+            <td>${formatCurrency(activeCapital)}</td>
+            <td class="profit-text">${formatCurrency(monthlyProfit)}</td>
+            <td>${formatCurrency(simpleDaily)}</td>
+            <td>${formatCurrency(compoundDaily)}</td>
+            <td><strong>${formatCurrency(endingBalance)}</strong></td>
             <td>${status}</td>
           </tr>
         `;
       }
 
       document.getElementById("planTable").innerHTML = rows;
-      document.getElementById("finalBalance").textContent = rupiah.format(balance);
-      document.getElementById("totalDeposit").textContent = rupiah.format(totalDeposit);
-      document.getElementById("totalProfit").textContent = rupiah.format(totalProfit);
-      document.getElementById("firstDailyTarget").textContent = rupiah.format(firstDaily);
+      document.getElementById("finalBalance").textContent = formatCurrency(balance);
+      document.getElementById("totalDeposit").textContent = formatCurrency(totalDeposit);
+      document.getElementById("totalProfit").textContent = formatCurrency(totalProfit);
+      document.getElementById("firstDailyTarget").textContent = formatCurrency(firstDaily);
 
       const profitRatio = totalDeposit > 0 ? Math.min((totalProfit / totalDeposit) * 100, 100) : 0;
       const balanceRatio = totalDeposit > 0 ? Math.min((balance / (totalDeposit * 1.35)) * 100, 100) : 0;
@@ -1379,8 +1588,9 @@
     }
 
     function fillExample() {
-      document.getElementById("initialCapital").value = "2.000.000";
-      document.getElementById("monthlyDeposit").value = "500.000";
+      const cfg = getCurrencyConfig();
+      setMoneyInputValue("initialCapital", cfg.defaultInitial);
+      setMoneyInputValue("monthlyDeposit", cfg.defaultMonthly);
       document.getElementById("monthlyRate").value = 3;
       document.getElementById("months").value = 12;
       calculatePlan(true);
@@ -1416,11 +1626,12 @@
 
       const day = getDayFromDate(date);
       const reached = result >= target;
-      const id = `${month}-${date}-${mode}`;
+      const id = `${selectedCurrency}-${month}-${date}-${mode}`;
 
       dailyChecks = dailyChecks.filter(item => item.id !== id);
       dailyChecks.unshift({
         id,
+        currency: selectedCurrency,
         month,
         day,
         date,
@@ -1468,21 +1679,21 @@
       const target = getSelectedDailyTarget();
       const selectedMonth = plan.month;
       const monthChecks = dailyChecks
-        .filter(item => item.month === selectedMonth && item.mode === mode)
+        .filter(item => (item.currency || "IDR") === selectedCurrency && item.month === selectedMonth && item.mode === mode)
         .sort((a, b) => a.day - b.day);
 
-      document.getElementById("selectedDailyTarget").textContent = rupiah.format(target);
+      document.getElementById("selectedDailyTarget").textContent = formatCurrency(target);
       document.getElementById("selectedDailyInfo").textContent =
-        `Bulan ${selectedMonth}, modal aktif ${rupiah.format(plan.activeCapital)}. Mode target: ${mode === "simple" ? "simple" : "compound"}.`;
+        `Bulan ${selectedMonth}, modal aktif ${formatCurrency(plan.activeCapital)}. Mode target: ${mode === "simple" ? "simple" : "compound"}.`;
 
-      document.getElementById("monthlyTargetValue").textContent = rupiah.format(plan.monthlyProfit);
+      document.getElementById("monthlyTargetValue").textContent = formatCurrency(plan.monthlyProfit);
 
       const doneCount = monthChecks.filter(item => item.reached).length;
       const totalProfit = monthChecks.reduce((sum, item) => sum + Number(item.result || 0), 0);
       const progress = Math.min((doneCount / 30) * 100, 100);
 
       document.getElementById("dailyDoneCount").textContent = `${doneCount}/30`;
-      document.getElementById("dailyTotalProfit").textContent = rupiah.format(totalProfit);
+      document.getElementById("dailyTotalProfit").textContent = formatCurrency(totalProfit);
       document.getElementById("dailyQuestProgress").style.width = progress + "%";
 
       const checksByDay = {};
@@ -1495,7 +1706,7 @@
         const data = checksByDay[day];
         const statusClass = data ? (data.reached ? "done" : "missed") : "empty-day";
         const icon = data ? (data.reached ? "✅" : "❌") : "⏳";
-        const resultText = data ? rupiah.format(data.result) : "Belum diisi";
+        const resultText = data ? formatCurrency(data.result) : "Belum diisi";
         const selisih = data ? data.result - target : 0;
         const resultClass = data ? (data.reached ? "good" : "bad") : "";
 
@@ -1505,9 +1716,9 @@
               <span>Hari ${day}</span>
               <span class="check-icon">${icon}</span>
             </div>
-            <div class="day-small">Target: <strong>${rupiah.format(target)}</strong></div>
+            <div class="day-small">Target: <strong>${formatCurrency(target)}</strong></div>
             <div class="day-result ${resultClass}">${resultText}</div>
-            ${data ? `<div class="day-small">Selisih: ${rupiah.format(selisih)}</div>` : `<div class="day-small">Input hasil harian agar bisa diceklis.</div>`}
+            ${data ? `<div class="day-small">Selisih: ${formatCurrency(selisih)}</div>` : `<div class="day-small">Input hasil harian agar bisa diceklis.</div>`}
           </div>
         `;
       }
@@ -1522,7 +1733,7 @@
       const selectedMonth = Number(document.getElementById("dailyMonthSelect").value || 1);
 
       const list = dailyChecks
-        .filter(item => item.month === selectedMonth && item.mode === mode)
+        .filter(item => (item.currency || "IDR") === selectedCurrency && item.month === selectedMonth && item.mode === mode)
         .sort((a, b) => b.date.localeCompare(a.date));
 
       if (list.length === 0) {
@@ -1540,9 +1751,9 @@
           <tr>
             <td>${item.date}</td>
             <td>Bulan ${item.month}</td>
-            <td>${rupiah.format(item.target)}</td>
-            <td class="${item.result >= 0 ? "profit-text" : "loss-text"}">${rupiah.format(item.result)}</td>
-            <td class="${selisih >= 0 ? "profit-text" : "loss-text"}">${rupiah.format(selisih)}</td>
+            <td>${formatCurrency(item.target)}</td>
+            <td class="${item.result >= 0 ? "profit-text" : "loss-text"}">${formatCurrency(item.result)}</td>
+            <td class="${selisih >= 0 ? "profit-text" : "loss-text"}">${formatCurrency(selisih)}</td>
             <td>
               <span class="pill ${item.reached ? "done" : "missed"}">
                 ${item.reached ? "✅ Tercapai" : "❌ Belum"}
@@ -1556,19 +1767,21 @@
     }
 
     function exportDailyCSV() {
-      if (dailyChecks.length === 0) {
+      const exportItems = dailyChecks.filter(item => (item.currency || "IDR") === selectedCurrency);
+      if (exportItems.length === 0) {
         showAlert("Belum ada data ceklis buat diexport 🐣");
         return;
       }
 
-      const header = ["Tanggal", "Bulan Simulasi", "Mode", "Target Harian", "Profit Hari Ini", "Selisih", "Status", "Catatan"];
-      const rows = dailyChecks.map(item => [
+      const header = ["Tanggal", "Mata Uang", "Bulan Simulasi", "Mode", "Target Harian", "Profit Hari Ini", "Selisih", "Status", "Catatan"];
+      const rows = exportItems.map(item => [
         item.date,
+        item.currency || "IDR",
         item.month,
         item.mode,
-        Math.round(item.target),
-        item.result,
-        Math.round(item.result - item.target),
+        Number(item.target).toFixed(getCurrencyConfig(item.currency || selectedCurrency).inputDecimals),
+        Number(item.result).toFixed(getCurrencyConfig(item.currency || selectedCurrency).inputDecimals),
+        Number(item.result - item.target).toFixed(getCurrencyConfig(item.currency || selectedCurrency).inputDecimals),
         item.reached ? "Tercapai" : "Belum",
         item.note
       ]);
@@ -1581,7 +1794,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "ceklis-target-harian-trading.csv";
+      a.download = `ceklis-target-harian-trading-${selectedCurrency.toLowerCase()}.csv`;
       a.click();
       URL.revokeObjectURL(url);
       showAlert("CSV ceklis berhasil dibuat 📥");
@@ -1590,6 +1803,7 @@
     function saveTrade() {
       const trade = {
         id: Date.now(),
+        currency: selectedCurrency,
         date: document.getElementById("tradeDate").value,
         pair: document.getElementById("pair").value.trim().toUpperCase(),
         side: document.getElementById("side").value,
@@ -1645,15 +1859,18 @@
     function renderJournal() {
       const tbody = document.getElementById("journalTable");
 
-      if (trades.length === 0) {
+      const visibleTrades = trades.filter(trade => (trade.currency || "IDR") === selectedCurrency);
+
+      if (visibleTrades.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="10" class="empty">Belum ada data jurnal. Yuk catat trade pertamamu 🐻</td>
+            <td colspan="10" class="empty">Belum ada data jurnal untuk ${selectedCurrency}. Yuk catat trade pertamamu 🐻</td>
           </tr>
         `;
       } else {
-        tbody.innerHTML = trades.map(trade => {
+        tbody.innerHTML = visibleTrades.map(trade => {
           const isProfit = Number(trade.result || 0) >= 0;
+          const tradeCurrency = trade.currency || "IDR";
           return `
             <tr>
               <td>${trade.date}</td>
@@ -1663,7 +1880,7 @@
               <td>${trade.sl || "-"}</td>
               <td>${trade.tp || "-"}</td>
               <td>${trade.risk ? trade.risk + "%" : "-"}</td>
-              <td class="${isProfit ? "profit-text" : "loss-text"}">${rupiah.format(trade.result)}</td>
+              <td class="${isProfit ? "profit-text" : "loss-text"}">${formatCurrency(trade.result, tradeCurrency)}</td>
               <td>${trade.note || "-"}</td>
               <td><button class="danger" onclick="deleteTrade(${trade.id})">Hapus</button></td>
             </tr>
@@ -1671,28 +1888,29 @@
         }).join("");
       }
 
-      const total = trades.reduce((sum, t) => sum + Number(t.result || 0), 0);
-      const wins = trades.filter(t => Number(t.result || 0) > 0).length;
-      const winRate = trades.length ? (wins / trades.length) * 100 : 0;
-      const avg = trades.length ? total / trades.length : 0;
+      const total = visibleTrades.reduce((sum, t) => sum + Number(t.result || 0), 0);
+      const wins = visibleTrades.filter(t => Number(t.result || 0) > 0).length;
+      const winRate = visibleTrades.length ? (wins / visibleTrades.length) * 100 : 0;
+      const avg = visibleTrades.length ? total / visibleTrades.length : 0;
 
       const journalPL = document.getElementById("journalPL");
-      document.getElementById("totalTrades").textContent = trades.length;
+      document.getElementById("totalTrades").textContent = visibleTrades.length;
       document.getElementById("winRate").textContent = percent.format(winRate) + "%";
-      journalPL.textContent = rupiah.format(total);
+      journalPL.textContent = formatCurrency(total);
       journalPL.className = total >= 0 ? "value green" : "value loss";
-      document.getElementById("avgTrade").textContent = rupiah.format(avg);
+      document.getElementById("avgTrade").textContent = formatCurrency(avg);
     }
 
     function exportCSV() {
-      if (trades.length === 0) {
+      const exportTrades = trades.filter(t => (t.currency || "IDR") === selectedCurrency);
+      if (exportTrades.length === 0) {
         showAlert("Belum ada data buat diexport 🐣");
         return;
       }
 
-      const header = ["Tanggal", "Pair", "Posisi", "Entry", "SL", "TP", "Risk", "Hasil", "Catatan"];
-      const rows = trades.map(t => [
-        t.date, t.pair, t.side, t.entry, t.sl, t.tp, t.risk, t.result, t.note
+      const header = ["Tanggal", "Mata Uang", "Pair", "Posisi", "Entry", "SL", "TP", "Risk", "Hasil", "Catatan"];
+      const rows = exportTrades.map(t => [
+        t.date, t.currency || "IDR", t.pair, t.side, t.entry, t.sl, t.tp, t.risk, Number(t.result).toFixed(getCurrencyConfig(t.currency || selectedCurrency).inputDecimals), t.note
       ]);
 
       const csv = [header, ...rows]
@@ -1703,13 +1921,20 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "jurnal-trading-lucu.csv";
+      a.download = `jurnal-trading-lucu-${selectedCurrency.toLowerCase()}.csv`;
       a.click();
       URL.revokeObjectURL(url);
       showAlert("CSV berhasil dibuat 📥");
     }
 
     setupMoneyInputs();
+    setupRateInput();
+    document.getElementById("currencySelect").value = selectedCurrency;
+    updateCurrencyUI();
+    if (selectedCurrency === "USD") {
+      setMoneyInputValue("initialCapital", getCurrencyConfig("USD").defaultInitial, "USD");
+      setMoneyInputValue("monthlyDeposit", getCurrencyConfig("USD").defaultMonthly, "USD");
+    }
     document.getElementById("tradeDate").valueAsDate = new Date();
     document.getElementById("dailyDate").valueAsDate = new Date();
     calculatePlan(false);
