@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jurnal Trading Lucu & Seru</title>
+  <title>Jurnal Trading </title>
   <style>
     :root {
       --bg1: #fff7ed;
@@ -19,7 +19,7 @@
       --red: #ef4444;
       --ink: #243044;
       --muted: #6b7280;
-      --card: rgba(255, 255, 255, .82);
+      --card: rgba(255, 255, 255, .84);
       --line: rgba(36, 48, 68, .10);
       --shadow: 0 18px 45px rgba(244, 114, 182, .20);
       --radius: 28px;
@@ -30,9 +30,7 @@
       font-family: ui-rounded, "Nunito", "Comic Sans MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -334,13 +332,9 @@
       border-radius: 14px;
     }
 
-    .section {
-      margin-top: 18px;
-    }
+    .section { margin-top: 18px; }
 
-    .card {
-      padding: 22px;
-    }
+    .card { padding: 22px; }
 
     .card-title {
       display: flex;
@@ -348,6 +342,7 @@
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
     .card h2 {
@@ -371,13 +366,9 @@
       gap: 16px;
     }
 
-    .grid-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
 
     .form-row {
       display: grid;
@@ -386,9 +377,8 @@
       margin-bottom: 13px;
     }
 
-    .form-row.two {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .form-row.two { grid-template-columns: repeat(2, 1fr); }
+    .form-row.three { grid-template-columns: repeat(3, 1fr); }
 
     label {
       display: block;
@@ -494,6 +484,9 @@
     .stat.win::after { content: "🏆"; }
     .stat.pl::after { content: "💎"; }
     .stat.avg::after { content: "🍭"; }
+    .stat.done::after { content: "✅"; }
+    .stat.target::after { content: "🎯"; }
+    .stat.missed::after { content: "🌧️"; }
 
     .stat .value {
       font-size: 26px;
@@ -524,6 +517,111 @@
       border-radius: 999px;
       transition: width .7s ease;
     }
+
+    .daily-panel {
+      background: linear-gradient(135deg, #fff, #fff7ed);
+      border-radius: 26px;
+      padding: 18px;
+      border: 2px solid rgba(251,146,60,.18);
+    }
+
+    .daily-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .daily-target-big {
+      background: linear-gradient(135deg, rgba(251,113,133,.14), rgba(167,139,250,.14));
+      border-radius: 24px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.95);
+    }
+
+    .daily-target-big .amount {
+      font-size: clamp(28px, 4.4vw, 46px);
+      font-weight: 1000;
+      color: #e11d48;
+      letter-spacing: -1.4px;
+      margin: 8px 0;
+    }
+
+    .daily-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .day-card {
+      background: #fff;
+      border: 2px solid rgba(148,163,184,.14);
+      border-radius: 20px;
+      padding: 12px;
+      min-height: 130px;
+      transition: .18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .day-card.done {
+      border-color: rgba(52,211,153,.45);
+      background: linear-gradient(135deg, #ecfdf5, #fff);
+    }
+
+    .day-card.missed {
+      border-color: rgba(251,113,133,.22);
+      background: linear-gradient(135deg, #fff1f2, #fff);
+    }
+
+    .day-card.empty-day {
+      opacity: .62;
+    }
+
+    .day-number {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 1000;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .check-icon {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f1f5f9;
+      font-size: 17px;
+    }
+
+    .day-card.done .check-icon {
+      background: #bbf7d0;
+    }
+
+    .day-card.missed .check-icon {
+      background: #ffe4e6;
+    }
+
+    .day-small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      line-height: 1.45;
+      margin-top: 5px;
+    }
+
+    .day-result {
+      font-size: 13px;
+      font-weight: 1000;
+      margin-top: 7px;
+    }
+
+    .day-result.good { color: #059669; }
+    .day-result.bad { color: #dc2626; }
 
     .table-wrap {
       overflow-x: auto;
@@ -557,9 +655,7 @@
       font-weight: 1000;
     }
 
-    tr:hover td {
-      background: #fff7ed;
-    }
+    tr:hover td { background: #fff7ed; }
 
     .profit-text {
       color: #059669;
@@ -591,6 +687,21 @@
       background: #ffe4e6;
     }
 
+    .pill.done {
+      color: #047857;
+      background: #d1fae5;
+    }
+
+    .pill.missed {
+      color: #be123c;
+      background: #ffe4e6;
+    }
+
+    .pill.waiting {
+      color: #92400e;
+      background: #fef3c7;
+    }
+
     .footer-note {
       color: var(--muted);
       font-size: 13px;
@@ -616,14 +727,8 @@
     }
 
     @keyframes fall {
-      from {
-        transform: translateY(-20px) rotate(0deg);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(100vh) rotate(420deg);
-        opacity: 0;
-      }
+      from { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      to { transform: translateY(100vh) rotate(420deg); opacity: 0; }
     }
 
     .cute-alert {
@@ -650,10 +755,17 @@
     @media (max-width: 980px) {
       .hero,
       .grid-4,
+      .grid-3,
       .grid-2,
       .form-row,
-      .form-row.two {
+      .form-row.two,
+      .form-row.three,
+      .daily-hero {
         grid-template-columns: 1fr;
+      }
+
+      .daily-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .topbar {
@@ -661,18 +773,14 @@
         flex-direction: column;
       }
 
-      .mini-nav {
-        justify-content: flex-start;
-      }
+      .mini-nav { justify-content: flex-start; }
 
       .hero-main {
         min-height: auto;
         padding: 24px;
       }
 
-      .daily-rate {
-        font-size: 34px;
-      }
+      .daily-rate { font-size: 34px; }
     }
 
     @media (max-width: 560px) {
@@ -681,9 +789,7 @@
         padding-top: 16px;
       }
 
-      .brand span {
-        font-size: 15px;
-      }
+      .brand span { font-size: 15px; }
 
       .mini-nav a {
         font-size: 12px;
@@ -697,9 +803,11 @@
         font-size: 42px;
       }
 
-      .stat .value {
-        font-size: 23px;
-      }
+      .stat .value { font-size: 23px; }
+
+      .daily-grid { grid-template-columns: 1fr; }
+
+      .day-card { min-height: auto; }
     }
   </style>
 </head>
@@ -725,6 +833,7 @@
       <div class="mini-nav">
         <a href="#simulasi">Simulasi</a>
         <a href="#target">Target</a>
+        <a href="#dailyQuest">Ceklis Harian</a>
         <a href="#jurnal">Jurnal</a>
         <a href="#riwayat">Riwayat</a>
       </div>
@@ -735,18 +844,18 @@
         <span class="kawaii-badge">🎀 Cute Trading Planner</span>
         <h1>
           Jurnal Trading<br>
-          <span class="gradient-text">Lebih Lucu & Seru</span>
+          <span class="gradient-text">+ Ceklis Harian</span>
         </h1>
         <p>
-          Catat trade kamu, hitung target harian, lihat perkembangan saldo bulanan,
-          dan jadikan disiplin trading terasa seperti game kecil yang menyenangkan.
+          Catat trade kamu, hitung target harian, centang otomatis jika target tercapai,
+          dan lihat riwayat harian supaya progres trading lebih jelas.
         </p>
 
         <div class="mascot-row">
           <div class="mascot">🐻</div>
           <div class="speech">
-            Misi hari ini: jangan overtrade, ikuti plan, dan target cukup kecil tapi konsisten.
-            Fokus utama bukan cepat kaya, tapi saldo bertumbuh rapi. 💗
+            Misi harian: cukup kejar target kecil yang masuk akal. Kalau sudah tembus target,
+            status otomatis jadi ceklis. Jangan maksa entry kalau market jelek. 💗
           </div>
         </div>
       </div>
@@ -765,8 +874,8 @@
           <div class="mission-list">
             <span>✅ Cek trend dulu</span>
             <span>✅ Tentukan SL sebelum entry</span>
-            <span>✅ Catat alasan entry</span>
-            <span>✅ Evaluasi setelah close</span>
+            <span>✅ Catat hasil harian</span>
+            <span>✅ Stop kalau target tercapai</span>
           </div>
         </div>
       </aside>
@@ -781,11 +890,11 @@
       <div class="form-row">
         <div>
           <label>Modal Awal</label>
-          <input type="number" id="initialCapital" value="2000000" />
+          <input type="text" id="initialCapital" class="money-input" value="2.000.000" inputmode="numeric" />
         </div>
         <div>
           <label>Tambah Modal per Bulan</label>
-          <input type="number" id="monthlyDeposit" value="500000" />
+          <input type="text" id="monthlyDeposit" class="money-input" value="500.000" inputmode="numeric" />
         </div>
         <div>
           <label>Target Profit per Bulan (%)</label>
@@ -800,7 +909,7 @@
       <div class="btns">
         <button onclick="calculatePlan(true)">✨ Hitung Sekarang</button>
         <button class="secondary" onclick="fillExample()">🐣 Pakai Contoh Rp2 Juta</button>
-        <button class="soft" onclick="scrollToJournal()">📝 Isi Jurnal</button>
+        <button class="soft" onclick="scrollToDaily()">✅ Ceklis Harian</button>
       </div>
     </section>
 
@@ -858,6 +967,111 @@
       </p>
     </section>
 
+    <section class="card section" id="dailyQuest">
+      <div class="card-title">
+        <h2>✅ Ceklis Target Harian</h2>
+        <span class="cute-chip">Bisa dilihat lagi nanti</span>
+      </div>
+
+      <div class="daily-panel">
+        <div class="daily-hero">
+          <div class="daily-target-big">
+            <div class="label">Target harian bulan yang dipilih</div>
+            <div class="amount" id="selectedDailyTarget">Rp0</div>
+            <div class="mini-note" id="selectedDailyInfo">
+              Pilih bulan simulasi untuk melihat berapa target per hari.
+            </div>
+          </div>
+
+          <div>
+            <div class="form-row two">
+              <div>
+                <label>Lihat Bulan Simulasi</label>
+                <select id="dailyMonthSelect" onchange="renderDailyQuest()"></select>
+              </div>
+              <div>
+                <label>Metode Target Harian</label>
+                <select id="dailyTargetMode" onchange="renderDailyQuest()">
+                  <option value="compound">Compound</option>
+                  <option value="simple">Simple</option>
+                </select>
+              </div>
+              <div>
+                <label>Tanggal Catatan</label>
+                <input type="date" id="dailyDate" />
+              </div>
+              <div>
+                <label>Profit Hari Ini (Rp)</label>
+                <input type="text" id="dailyResult" class="money-input" placeholder="Contoh: 2.500 atau -1.000" inputmode="numeric" />
+              </div>
+            </div>
+
+            <div>
+              <label>Catatan Harian</label>
+              <textarea id="dailyNote" placeholder="Contoh: target tercapai 1 trade, lanjut stop supaya tidak overtrade."></textarea>
+            </div>
+
+            <div class="btns">
+              <button onclick="saveDailyCheck()">✅ Simpan Ceklis Harian</button>
+              <button class="soft" onclick="clearDailyForm()">🧽 Kosongkan</button>
+              <button class="secondary" onclick="exportDailyCSV()">📥 Export Ceklis</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="grid grid-3 section">
+          <div class="stat done">
+            <div class="label">Hari Tercapai</div>
+            <div class="value green" id="dailyDoneCount">0</div>
+          </div>
+          <div class="stat target">
+            <div class="label">Target Bulan Ini</div>
+            <div class="value pink" id="monthlyTargetValue">Rp0</div>
+          </div>
+          <div class="stat missed">
+            <div class="label">Total Profit Harian</div>
+            <div class="value blue" id="dailyTotalProfit">Rp0</div>
+          </div>
+        </section>
+
+        <div class="progress-area">
+          <div class="progress-fill" id="dailyQuestProgress"></div>
+        </div>
+
+        <div class="daily-grid" id="dailyGrid"></div>
+      </div>
+
+      <p class="footer-note">
+        Cara kerja: masukkan profit harian. Kalau profit hari itu lebih besar atau sama dengan target harian,
+        kartu harinya otomatis jadi ✅. Data disimpan di browser.
+      </p>
+    </section>
+
+    <section class="card section">
+      <div class="card-title">
+        <h2>📋 Riwayat Ceklis Harian</h2>
+        <span class="cute-chip">Target vs hasil harian</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Bulan Simulasi</th>
+              <th>Target Harian</th>
+              <th>Profit Hari Ini</th>
+              <th>Selisih</th>
+              <th>Status</th>
+              <th>Catatan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="dailyHistoryTable"></tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="grid grid-2 section" id="jurnal">
       <div class="card">
         <div class="card-title">
@@ -883,7 +1097,7 @@
           </div>
           <div>
             <label>Hasil Profit/Loss (Rp)</label>
-            <input type="number" id="result" placeholder="Contoh: 65000 atau -30000" />
+            <input type="text" id="result" class="money-input" placeholder="Contoh: 65.000 atau -30.000" inputmode="numeric" />
           </div>
           <div>
             <label>Entry</label>
@@ -991,10 +1205,62 @@
     });
 
     const colors = ["#fb7185", "#a78bfa", "#38bdf8", "#34d399", "#fbbf24", "#fb923c"];
-    let trades = JSON.parse(localStorage.getItem("cuteTradingJournalV2")) || [];
+    let trades = JSON.parse(localStorage.getItem("cuteTradingJournalV3")) || [];
+    let dailyChecks = JSON.parse(localStorage.getItem("cuteDailyChecksV3")) || [];
+    let planData = [];
+
+    function parseMoney(value) {
+      const text = String(value || "");
+      const isNegative = text.trim().startsWith("-");
+      const clean = text.replace(/[^0-9]/g, "");
+      if (!clean) return 0;
+      const number = Number(clean);
+      return isNegative ? -number : number;
+    }
+
+    function formatMoneyText(value) {
+      const text = String(value || "");
+      const isNegative = text.trim().startsWith("-");
+      const clean = text.replace(/[^0-9]/g, "");
+      if (!clean) return isNegative ? "-" : "";
+      const formatted = new Intl.NumberFormat("id-ID").format(Number(clean));
+      return isNegative ? "-" + formatted : formatted;
+    }
+
+    function setupMoneyInputs() {
+      document.querySelectorAll(".money-input").forEach(input => {
+        input.addEventListener("input", () => {
+          const cursorAtEnd = input.selectionStart === input.value.length;
+          input.value = formatMoneyText(input.value);
+          if (cursorAtEnd) {
+            input.setSelectionRange(input.value.length, input.value.length);
+          }
+        });
+
+        input.addEventListener("blur", () => {
+          input.value = formatMoneyText(input.value);
+        });
+      });
+    }
 
     function getNumber(id) {
-      return Number(document.getElementById(id).value || 0);
+      const element = document.getElementById(id);
+      if (element && element.classList.contains("money-input")) {
+        return parseMoney(element.value);
+      }
+      return Number(element.value || 0);
+    }
+
+    function getSelectedPlan() {
+      const month = Number(document.getElementById("dailyMonthSelect").value || 1);
+      return planData.find(item => item.month === month) || planData[0];
+    }
+
+    function getSelectedDailyTarget() {
+      const plan = getSelectedPlan();
+      const mode = document.getElementById("dailyTargetMode").value;
+      if (!plan) return 0;
+      return mode === "simple" ? plan.simpleDaily : plan.compoundDaily;
     }
 
     function showAlert(message) {
@@ -1036,6 +1302,7 @@
       let totalDeposit = initialCapital;
       let firstDaily = 0;
       let rows = "";
+      planData = [];
 
       for (let month = 1; month <= months; month++) {
         if (month > 1) {
@@ -1050,6 +1317,15 @@
         const endingBalance = activeCapital + monthlyProfit;
 
         if (month === 1) firstDaily = compoundDaily;
+
+        planData.push({
+          month,
+          activeCapital,
+          monthlyProfit,
+          simpleDaily,
+          compoundDaily,
+          endingBalance
+        });
 
         totalProfit += monthlyProfit;
         balance = endingBalance;
@@ -1081,22 +1357,234 @@
       document.getElementById("profitProgress").style.width = profitRatio + "%";
       document.getElementById("balanceProgress").style.width = balanceRatio + "%";
 
+      fillDailyMonthOptions();
+      renderDailyQuest();
+
       if (withParty) {
         confetti();
         showAlert("Simulasi berhasil dihitung 🎉");
       }
     }
 
+    function fillDailyMonthOptions() {
+      const select = document.getElementById("dailyMonthSelect");
+      const selected = Number(select.value || 1);
+      select.innerHTML = planData.map(item => `
+        <option value="${item.month}">Bulan ${item.month}</option>
+      `).join("");
+
+      if (planData.some(item => item.month === selected)) {
+        select.value = selected;
+      }
+    }
+
     function fillExample() {
-      document.getElementById("initialCapital").value = 2000000;
-      document.getElementById("monthlyDeposit").value = 500000;
+      document.getElementById("initialCapital").value = "2.000.000";
+      document.getElementById("monthlyDeposit").value = "500.000";
       document.getElementById("monthlyRate").value = 3;
       document.getElementById("months").value = 12;
       calculatePlan(true);
     }
 
+    function scrollToDaily() {
+      document.getElementById("dailyQuest").scrollIntoView({ behavior: "smooth" });
+    }
+
     function scrollToJournal() {
       document.getElementById("jurnal").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function getDayFromDate(dateString) {
+      if (!dateString) return 1;
+      const parts = dateString.split("-");
+      return Number(parts[2] || 1);
+    }
+
+    function saveDailyCheck() {
+      const plan = getSelectedPlan();
+      const target = getSelectedDailyTarget();
+      const month = plan ? plan.month : 1;
+      const date = document.getElementById("dailyDate").value;
+      const result = parseMoney(document.getElementById("dailyResult").value);
+      const note = document.getElementById("dailyNote").value.trim();
+      const mode = document.getElementById("dailyTargetMode").value;
+
+      if (!date) {
+        showAlert("Tanggal harian wajib diisi 🐣");
+        return;
+      }
+
+      const day = getDayFromDate(date);
+      const reached = result >= target;
+      const id = `${month}-${date}-${mode}`;
+
+      dailyChecks = dailyChecks.filter(item => item.id !== id);
+      dailyChecks.unshift({
+        id,
+        month,
+        day,
+        date,
+        mode,
+        target,
+        result,
+        reached,
+        note
+      });
+
+      localStorage.setItem("cuteDailyChecksV3", JSON.stringify(dailyChecks));
+      clearDailyForm(false);
+      renderDailyQuest();
+      renderDailyHistory();
+
+      if (reached) {
+        confetti();
+        showAlert("Target harian tercapai! ✅🎉");
+      } else {
+        showAlert("Tersimpan. Besok coba lagi ya 🌱");
+      }
+    }
+
+    function clearDailyForm(resetDate = true) {
+      if (resetDate) {
+        document.getElementById("dailyDate").valueAsDate = new Date();
+      }
+      document.getElementById("dailyResult").value = "";
+      document.getElementById("dailyNote").value = "";
+    }
+
+    function deleteDailyCheck(id) {
+      dailyChecks = dailyChecks.filter(item => item.id !== id);
+      localStorage.setItem("cuteDailyChecksV3", JSON.stringify(dailyChecks));
+      renderDailyQuest();
+      renderDailyHistory();
+      showAlert("Ceklis harian dihapus 🧽");
+    }
+
+    function renderDailyQuest() {
+      const plan = getSelectedPlan();
+      if (!plan) return;
+
+      const mode = document.getElementById("dailyTargetMode").value;
+      const target = getSelectedDailyTarget();
+      const selectedMonth = plan.month;
+      const monthChecks = dailyChecks
+        .filter(item => item.month === selectedMonth && item.mode === mode)
+        .sort((a, b) => a.day - b.day);
+
+      document.getElementById("selectedDailyTarget").textContent = rupiah.format(target);
+      document.getElementById("selectedDailyInfo").textContent =
+        `Bulan ${selectedMonth}, modal aktif ${rupiah.format(plan.activeCapital)}. Mode target: ${mode === "simple" ? "simple" : "compound"}.`;
+
+      document.getElementById("monthlyTargetValue").textContent = rupiah.format(plan.monthlyProfit);
+
+      const doneCount = monthChecks.filter(item => item.reached).length;
+      const totalProfit = monthChecks.reduce((sum, item) => sum + Number(item.result || 0), 0);
+      const progress = Math.min((doneCount / 30) * 100, 100);
+
+      document.getElementById("dailyDoneCount").textContent = `${doneCount}/30`;
+      document.getElementById("dailyTotalProfit").textContent = rupiah.format(totalProfit);
+      document.getElementById("dailyQuestProgress").style.width = progress + "%";
+
+      const checksByDay = {};
+      monthChecks.forEach(item => {
+        checksByDay[item.day] = item;
+      });
+
+      let cards = "";
+      for (let day = 1; day <= 30; day++) {
+        const data = checksByDay[day];
+        const statusClass = data ? (data.reached ? "done" : "missed") : "empty-day";
+        const icon = data ? (data.reached ? "✅" : "❌") : "⏳";
+        const resultText = data ? rupiah.format(data.result) : "Belum diisi";
+        const selisih = data ? data.result - target : 0;
+        const resultClass = data ? (data.reached ? "good" : "bad") : "";
+
+        cards += `
+          <div class="day-card ${statusClass}">
+            <div class="day-number">
+              <span>Hari ${day}</span>
+              <span class="check-icon">${icon}</span>
+            </div>
+            <div class="day-small">Target: <strong>${rupiah.format(target)}</strong></div>
+            <div class="day-result ${resultClass}">${resultText}</div>
+            ${data ? `<div class="day-small">Selisih: ${rupiah.format(selisih)}</div>` : `<div class="day-small">Input hasil harian agar bisa diceklis.</div>`}
+          </div>
+        `;
+      }
+
+      document.getElementById("dailyGrid").innerHTML = cards;
+      renderDailyHistory();
+    }
+
+    function renderDailyHistory() {
+      const tbody = document.getElementById("dailyHistoryTable");
+      const mode = document.getElementById("dailyTargetMode").value;
+      const selectedMonth = Number(document.getElementById("dailyMonthSelect").value || 1);
+
+      const list = dailyChecks
+        .filter(item => item.month === selectedMonth && item.mode === mode)
+        .sort((a, b) => b.date.localeCompare(a.date));
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="empty">Belum ada ceklis harian untuk bulan ini 🐣</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(item => {
+        const selisih = Number(item.result || 0) - Number(item.target || 0);
+        return `
+          <tr>
+            <td>${item.date}</td>
+            <td>Bulan ${item.month}</td>
+            <td>${rupiah.format(item.target)}</td>
+            <td class="${item.result >= 0 ? "profit-text" : "loss-text"}">${rupiah.format(item.result)}</td>
+            <td class="${selisih >= 0 ? "profit-text" : "loss-text"}">${rupiah.format(selisih)}</td>
+            <td>
+              <span class="pill ${item.reached ? "done" : "missed"}">
+                ${item.reached ? "✅ Tercapai" : "❌ Belum"}
+              </span>
+            </td>
+            <td>${item.note || "-"}</td>
+            <td><button class="danger" onclick="deleteDailyCheck('${item.id}')">Hapus</button></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function exportDailyCSV() {
+      if (dailyChecks.length === 0) {
+        showAlert("Belum ada data ceklis buat diexport 🐣");
+        return;
+      }
+
+      const header = ["Tanggal", "Bulan Simulasi", "Mode", "Target Harian", "Profit Hari Ini", "Selisih", "Status", "Catatan"];
+      const rows = dailyChecks.map(item => [
+        item.date,
+        item.month,
+        item.mode,
+        Math.round(item.target),
+        item.result,
+        Math.round(item.result - item.target),
+        item.reached ? "Tercapai" : "Belum",
+        item.note
+      ]);
+
+      const csv = [header, ...rows]
+        .map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ceklis-target-harian-trading.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+      showAlert("CSV ceklis berhasil dibuat 📥");
     }
 
     function saveTrade() {
@@ -1109,7 +1597,7 @@
         sl: document.getElementById("sl").value,
         tp: document.getElementById("tp").value,
         risk: document.getElementById("risk").value,
-        result: Number(document.getElementById("result").value || 0),
+        result: parseMoney(document.getElementById("result").value),
         note: document.getElementById("note").value.trim()
       };
 
@@ -1119,7 +1607,7 @@
       }
 
       trades.unshift(trade);
-      localStorage.setItem("cuteTradingJournalV2", JSON.stringify(trades));
+      localStorage.setItem("cuteTradingJournalV3", JSON.stringify(trades));
       clearForm();
       renderJournal();
       confetti();
@@ -1140,7 +1628,7 @@
 
     function deleteTrade(id) {
       trades = trades.filter(trade => trade.id !== id);
-      localStorage.setItem("cuteTradingJournalV2", JSON.stringify(trades));
+      localStorage.setItem("cuteTradingJournalV3", JSON.stringify(trades));
       renderJournal();
       showAlert("Data trade dihapus 🧽");
     }
@@ -1149,7 +1637,7 @@
       const yakin = confirm("Yakin mau hapus semua jurnal?");
       if (!yakin) return;
       trades = [];
-      localStorage.removeItem("cuteTradingJournalV2");
+      localStorage.removeItem("cuteTradingJournalV3");
       renderJournal();
       showAlert("Semua jurnal sudah bersih 🗑️");
     }
@@ -1221,9 +1709,13 @@
       showAlert("CSV berhasil dibuat 📥");
     }
 
+    setupMoneyInputs();
     document.getElementById("tradeDate").valueAsDate = new Date();
+    document.getElementById("dailyDate").valueAsDate = new Date();
     calculatePlan(false);
+    clearDailyForm(true);
     renderJournal();
+    renderDailyHistory();
   </script>
 </body>
 </html>
